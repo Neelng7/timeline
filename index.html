@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js" defer></script>
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+
+  <title>Timeline</title>
+
+</head>
+<body>
+<!-- <h2>Timeline</h2><br> -->
+
+<div class="signin-field box-effect hide">
+    <div class="signIn-container">
+      <h1>Sign in</h1><br>
+      <p id="signin-mssg">Sign in to access your account<br></p><br>
+      <p id="signin-alert" class="alert"></p>
+
+      <button type="button" id="signin-btn"  class="btn">Sign in</button><br>
+    </div>
+</div>
+
+<main class="hide">
+    <div class="timeline" id="timeline"></div>
+    
+    <div class="btns">
+        <button id="sign-out">Sign Out</button>
+        <button id="add-event-btn">Add Event</button>
+    </div>
+
+    
+    <div id="event-form">
+      <label for="event-date">Event Date:</label>
+      <input type="date" id="event-date" required>
+      <br>
+      <label for="event-description">Event Description:</label>
+      <textarea id="event-description" rows="4" required></textarea>
+      <br>
+      <button id="save-event-btn">Save Event</button>
+      <button id="cancel-event-btn">Cancel</button>
+    </div>
+</main>
+
+</body>
+</html>
+
+

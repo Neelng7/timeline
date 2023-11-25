@@ -1,0 +1,125 @@
+body{
+    background-color: #f0f0f0;
+}
+
+main {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h2{
+    position: absolute;
+    top: 10vh;
+    width: fit-content;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.box-effect{
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 0.7em;
+    border: none;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+}
+
+.signIn-container{
+    margin-inline: 20px; 
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+.signUp-info-wrapper{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.signIn-container > h1, .signIn-container > p{
+    margin: 0;
+    padding: 0;
+}
+
+.btn{
+    border-radius: 25px;
+    border: none;
+    font-size: 85%;
+    background: rgb(0, 47, 77);
+    padding-inline: 0;
+    padding-block: 6px;
+    min-width: 8em;
+    width: calc(5% + 8em);
+    color: #f0f0f0;
+    margin-inline: 0;
+    position: absolute;
+    cursor: pointer;
+    left: calc(47.5% - 4em);
+}
+
+.timeline {
+    position: relative;
+    width: 70vw;
+    height: 2px;
+    margin-inline: 10vw;
+    background-color: #3498db;
+}
+
+.marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: #3498db;
+    border-radius: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.event {
+    position: absolute;
+    width: 200px;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+.btns{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+#add-event-btn, #sign-out{
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#event-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.hide{
+    display: none !important;
+}
