@@ -12,7 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 var auth = firebase.auth();
-var uids = ['rCdlsvDQTpcpqzxAmwMyRDueMlB3']
+var uids = ['rCdlsvDQTpcpqzxAmwMyRDueMlB3', 'l7TLRyyEnxV3De8CtSouQGlQccQ2']
 
 const signinField = document.querySelector('.signin-field');
 const mainDiv = document.querySelector('main');
