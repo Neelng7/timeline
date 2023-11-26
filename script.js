@@ -12,7 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 var auth = firebase.auth();
-var uids = ['rCdlsvDQTpcpqzxAmwMyRDueMlB3', 'l7TLRyyEnxV3De8CtSouQGlQccQ2']
+var uids = ['rCdlsvDQTpcpqzxAmwMyRDueMlB3', 'l7TLRyyEnxV3De8CtSouQGlQccQ2'];
 
 const signinField = document.querySelector('.signin-field');
 const mainDiv = document.querySelector('main');
@@ -22,6 +22,7 @@ auth.onAuthStateChanged(user => {
         if(uids.includes(user.uid)){
             mainDiv.classList.remove('hide');
             signinField.classList.toggle("hide", true);
+            document.querySelector('body').style.backgroundImage = "linear-gradient(to left, rgb(255, 202, 242) , #d5ecf7)";
             retrievData();
         }else{
             alert("Access Denied!");
@@ -48,7 +49,7 @@ const addEventBtn = document.getElementById('add-event-btn');
 const eventForm = document.getElementById('event-form');
 const saveEventBtn = document.getElementById('save-event-btn');
 const cancelEventBtn = document.getElementById('cancel-event-btn');
-var allDB_data;
+var allDB_data, timeline_len;
 
 function retrievData(){
     var dbDataRef  = database.ref('/');
@@ -56,6 +57,10 @@ function retrievData(){
         allDB_data = data.val();
     }).then(() => {
         for (let i = 0; i < Object.keys(allDB_data).length; i++) createEvent(i);
+        var marker = document.createElement('div');
+        marker.classList.add('space');
+        marker.style.left = `calc(${timeline_len + 10}vw)`;
+        timeline.appendChild(marker);
     })
 }
 
@@ -87,20 +92,26 @@ function createEvent(index) {
     const marker = document.createElement('div');
     const eventElement = document.createElement('div');
     var eventDescription = Object.values(allDB_data)[index];
-    const positionPercentage = (100 / (Object.keys(allDB_data).length - 1)) * index;
-    
+    var posDiff = parseInt(Object.keys(allDB_data)[index]) - parseInt(Object.keys(allDB_data)[index-1]);
+    posDiff = index == 0 ? 0 : posDiff;
+
+    // const positionPercentage = (100 / (Object.keys(allDB_data).length - 1)) * index;
+    const positionPercentage = (100 / (Object.keys(allDB_data).length - 1)) * (posDiff/5000000000) * index;
+    timeline.style.width = positionPercentage + "vw";
+    timeline_len = positionPercentage
+
     var eventDate = new Date(parseInt(Object.keys(allDB_data)[index])).toLocaleDateString();
     var eventDateList = eventDate.split("/");
     [eventDateList[0], eventDateList[1]] = [eventDateList[1], eventDateList[0]];
     eventDate = eventDateList.join("/");
 
     marker.classList.add('marker');
-    marker.style.left = `${positionPercentage}%`;
+    marker.style.left = `${positionPercentage}vw`;
     timeline.appendChild(marker);
     eventElement.classList.add('event');
 
     eventElement.innerHTML = `<strong>${eventDate}</strong><br>${eventDescription}`;
-    eventElement.style.left = `${positionPercentage}%`;
+    eventElement.style.left = `${positionPercentage}vw`;
     timeline.appendChild(eventElement);
 
     marker.addEventListener('mouseenter', () => {
