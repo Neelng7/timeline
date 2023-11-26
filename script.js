@@ -23,6 +23,7 @@ auth.onAuthStateChanged(user => {
             mainDiv.classList.remove('hide');
             signinField.classList.toggle("hide", true);
             document.querySelector('body').style.backgroundImage = "linear-gradient(to left, rgb(255, 202, 242) , #d5ecf7)";
+            document.querySelector('title').textContent = "Neelal";
             retrievData();
         }else{
             alert("Access Denied!");
