@@ -69,7 +69,6 @@ function retrievData(){
 
         for (let i = 0; i < items.length; i++) createEvent(i);
 
-        // for (let i = 0; i < Object.keys(allDB_data).length; i++) createEvent(i);
         var marker = document.createElement('div');
         marker.classList.add('space');
         marker.style.left = `calc(${timeline_len + 10}vw)`;
@@ -107,7 +106,7 @@ function createEvent(index) {
     var eventDescription = items[index][1];
     var posDiff = index == 0 ? 0 : parseInt(items[index][0]) - parseInt(items[index - 1][0]);
 
-    const positionPercentage = (100 / (items.length - 1)) * (posDiff/5000000000) * index;
+    const positionPercentage = (100 / (items.length - 1)) * (posDiff/10000000000) * index;
     timeline_len += positionPercentage;
     timeline_len += positionPercentage
     timeline.style.width =timeline_len + "vw";
@@ -121,9 +120,6 @@ function createEvent(index) {
     marker.style.left = `${timeline_len}vw`;
     timeline.appendChild(marker);
     eventElement.classList.add('event');
-
-    console.log(index, eventDate, eventDescription,timeline_len, timeline_len)
-
 
     eventElement.innerHTML = `<strong>${eventDate}</strong><br>${eventDescription}`;
     eventElement.style.left = `${timeline_len}vw`;
