@@ -50,14 +50,26 @@ const addEventBtn = document.getElementById('add-event-btn');
 const eventForm = document.getElementById('event-form');
 const saveEventBtn = document.getElementById('save-event-btn');
 const cancelEventBtn = document.getElementById('cancel-event-btn');
-var allDB_data, timeline_len;
+var allDB_data, items,timeline_len = 0;
 
 function retrievData(){
     var dbDataRef  = database.ref('/');
     dbDataRef.once("value", data => {
         allDB_data = data.val();
     }).then(() => {
-        for (let i = 0; i < Object.keys(allDB_data).length; i++) createEvent(i);
+        allDB_data[new Date().getTime()] = "Today";
+
+        items = Object.keys(allDB_data).map(function(key) {
+            return [key, allDB_data[key]];
+        });
+
+        items.sort(function(first, second) {
+            return second[1] - first[1];
+        });
+
+        for (let i = 0; i < items.length; i++) createEvent(i);
+
+        // for (let i = 0; i < Object.keys(allDB_data).length; i++) createEvent(i);
         var marker = document.createElement('div');
         marker.classList.add('space');
         marker.style.left = `calc(${timeline_len + 10}vw)`;
@@ -92,27 +104,29 @@ function createEvent(index) {
 
     const marker = document.createElement('div');
     const eventElement = document.createElement('div');
-    var eventDescription = Object.values(allDB_data)[index];
-    var posDiff = parseInt(Object.keys(allDB_data)[index]) - parseInt(Object.keys(allDB_data)[index-1]);
-    posDiff = index == 0 ? 0 : posDiff;
+    var eventDescription = items[index][1];
+    var posDiff = index == 0 ? 0 : parseInt(items[index][0]) - parseInt(items[index - 1][0]);
 
-    // const positionPercentage = (100 / (Object.keys(allDB_data).length - 1)) * index;
-    const positionPercentage = (100 / (Object.keys(allDB_data).length - 1)) * (posDiff/5000000000) * index;
-    timeline.style.width = positionPercentage + "vw";
-    timeline_len = positionPercentage
+    const positionPercentage = (100 / (items.length - 1)) * (posDiff/5000000000) * index;
+    timeline_len += positionPercentage;
+    timeline_len += positionPercentage
+    timeline.style.width =timeline_len + "vw";
 
-    var eventDate = new Date(parseInt(Object.keys(allDB_data)[index])).toLocaleDateString();
+    var eventDate = new Date(parseInt(items[index][0])).toLocaleDateString();
     var eventDateList = eventDate.split("/");
     [eventDateList[0], eventDateList[1]] = [eventDateList[1], eventDateList[0]];
     eventDate = eventDateList.join("/");
 
     marker.classList.add('marker');
-    marker.style.left = `${positionPercentage}vw`;
+    marker.style.left = `${timeline_len}vw`;
     timeline.appendChild(marker);
     eventElement.classList.add('event');
 
+    console.log(index, eventDate, eventDescription,timeline_len, timeline_len)
+
+
     eventElement.innerHTML = `<strong>${eventDate}</strong><br>${eventDescription}`;
-    eventElement.style.left = `${positionPercentage}vw`;
+    eventElement.style.left = `${timeline_len}vw`;
     timeline.appendChild(eventElement);
 
     marker.addEventListener('mouseenter', () => {
